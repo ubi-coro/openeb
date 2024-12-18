@@ -38,28 +38,11 @@ some [samples](https://docs.prophesee.ai/stable/samples.html) to discover how to
 
 ### Read how to compile the repo on:
 
-<div style="width: 300px;">
-  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
-    <a href="docs/compile-linux.md">
-        <p><b>Linux</b></p>
-        <img src="https://seeklogo.com/images/T/tux-logo-AA06C623EC-seeklogo.com.png" height="50" />
-    </a>
-  </div>
-  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
-    <a href="docs/compile-windows.md">
-        <p><b>Windows</b></p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/768px-Windows_logo_-_2021.svg.png" height="45" />
-    </a>
-  </div>
-  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
-    <a href="docs/compile-mac.md">
-        <p><b>MacOS</b></p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/1724px-Apple_logo_grey.svg.png" height="50" />
-    </a>
-  </div>
-</div>
+- <a href="docs/compile-linux.md"><img src="docs/media/canonical_logo.png" height="17" /> <b>Linux</b></a>
+- <a href="docs/compile-windows"><img src="docs/media/windows_logo.png" height="17" /> <b>Windows</b></a>
+- <a href="docs/compile-mac.md"><img src="docs/media/apple_logo.png" height="17" /> <b>MacOS</b></a>
 
-#### See here a [project overview](docs/run.md)
+### See here a [project overview](docs/run.md)
 
 ### Conversion Scripts
 

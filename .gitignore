@@ -19,3 +19,4 @@ out/
 
 # Generated open source license RST file
 doc/source/open_source_licenses.rst
+.DS_Store
