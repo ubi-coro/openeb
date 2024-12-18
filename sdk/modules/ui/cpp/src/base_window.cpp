@@ -28,7 +28,7 @@ namespace Metavision {
 namespace detail {
 
 GLuint LoadShaders() {
-    const char *vertex_shader_str = "#version 310 es\n"
+    const char *vertex_shader_str = "#version 330\n"
                                     "layout(location = 0) in vec3 vertexPosition_modelspace;\n"
                                     "layout(location = 1) in vec2 vertexUV;\n"
                                     "out vec2 UV;\n"
@@ -38,7 +38,7 @@ GLuint LoadShaders() {
                                     "    UV = vertexUV;\n"
                                     "}\n";
 
-    const char *fragment_shader_str = "#version 310 es\n"
+    const char *fragment_shader_str = "#version 330\n"
                                       "in mediump vec2 UV;\n"
                                       "out mediump vec3 color;\n"
                                       "uniform sampler2D Sampler;\n"

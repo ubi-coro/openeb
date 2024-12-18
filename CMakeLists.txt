@@ -19,6 +19,14 @@ option(BUILD_TESTING "Build OpenEB's test suite" OFF)
 
 cmake_minimum_required(VERSION 3.5)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    include_directories(/usr/local/include)
+    link_directories(/usr/local/lib)
+    
+    include_directories(/opt/homebrew/include)
+    link_directories(/opt/homebrew/lib)
+endif()
+
 project(metavision VERSION 5.0.0)
 set(PROJECT_VERSION_SUFFIX "")
 
@@ -157,7 +165,7 @@ if (MSVC)
     include_directories(${VCPKG_INCLUDE_DIR})
 elseif (NOT ANDROID AND "${TARGET_PLATFORM}" STREQUAL "")
     # Needed when building with GCC < 9
-    link_libraries(stdc++fs)
+    #link_libraries(stdc++fs)
 
     # Platforms with their own toolchains should define their own compile flags
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
