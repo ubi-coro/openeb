@@ -1,3 +1,7 @@
+[🏠 Home](https://github.com/ubi-coro/openeb)
+
+---
+
 # Compiling on MacOS
 ## Retrieving OpenEB source code
 

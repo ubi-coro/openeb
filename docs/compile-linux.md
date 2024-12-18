@@ -1,3 +1,7 @@
+[🏠 Home](https://github.com/ubi-coro/openeb)
+
+---
+
 # Compiling on Linux
 
 Compilation and execution were tested on platforms that meet the following requirements:

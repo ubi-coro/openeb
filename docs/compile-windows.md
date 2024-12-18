@@ -1,3 +1,7 @@
+[🏠 Home](https://github.com/ubi-coro/openeb)
+
+---
+
 # Compiling on Windows
 
 Currently, we support only Windows 10. 

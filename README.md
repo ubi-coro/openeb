@@ -36,13 +36,30 @@ some [samples](https://docs.prophesee.ai/stable/samples.html) to discover how to
 [our API](https://docs.prophesee.ai/stable/api.html) and a more detailed
 [description of our modules and packaging](https://docs.prophesee.ai/stable/modules.html).
 
-#### [Compiling on Linux](docs/compile-linux.md)
+### Read how to compile the repo on:
 
-#### [Compiling on Windows](docs/compile-windows.md)
+<div style="width: 300px;">
+  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
+    <a href="docs/compile-linux.md">
+        <p><b>Linux</b></p>
+        <img src="https://seeklogo.com/images/T/tux-logo-AA06C623EC-seeklogo.com.png" height="50" />
+    </a>
+  </div>
+  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
+    <a href="docs/compile-windows.md">
+        <p><b>Windows</b></p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/768px-Windows_logo_-_2021.svg.png" height="45" />
+    </a>
+  </div>
+  <div style="display: inline-block; width: 32%; min-width: 50px; vertical-align: top; text-align: center;">
+    <a href="docs/compile-mac.md">
+        <p><b>MacOS</b></p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/1724px-Apple_logo_grey.svg.png" height="50" />
+    </a>
+  </div>
+</div>
 
-#### [Compiling on Mac](docs/compile-mac.md)
-
-#### [Project overview](docs/run.md)
+#### See here a [project overview](docs/run.md)
 
 ### Conversion Scripts
 
