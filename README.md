@@ -43,3 +43,18 @@ some [samples](https://docs.prophesee.ai/stable/samples.html) to discover how to
 #### [Compiling on Mac](docs/compile-mac.md)
 
 #### [Project overview](docs/run.md)
+
+### Conversion Scripts
+
+Description | Path
+-|-
+event file → `.csv` | `build/bin/metavision_file_to_csv`
+`.raw` or `.hdf5` → `.dat` | `build/bin/metavision_file_to_dat`
+event file or folder → `.hdf5` | `build/bin/metavision_file_to_hdf5`
+`.raw` or `.hdf5` → `.avi` | `build/bin/metavision_file_to_video`
+
+### Viewer
+
+Description | Path
+-|-
+view and record a camera or file | `build/bin/metavision_viewer`
