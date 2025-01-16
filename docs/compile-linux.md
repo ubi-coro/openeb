@@ -43,7 +43,7 @@ Clone the [GitHub repository](https://github.com/prophesee-ai/openeb):
 git clone https://github.com/prophesee-ai/openeb.git --branch 5.0.0
 ```
 
-In the following sections, absolute path to this directory is called `OPENEB_SRC_DIR`
+In the following sections, absolute path to this directory is called `OPENEB_SRC_DIR`.
 
 > [!CAUTION]
 >
@@ -59,13 +59,16 @@ sudo apt -y install apt-utils build-essential software-properties-common wget un
 sudo apt -y install libopencv-dev libboost-all-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler
 sudo apt -y install libhdf5-dev hdf5-tools libglew-dev libglfw3-dev libcanberra-gtk-module ffmpeg 
 ```
+> [!NOTE]
+>
+> Optionally, if you want to run the tests, you need to install `Google Gtest` and `Gmock` packages.
+> For more details, see [Google Test User Guide](https://google.github.io/googletest/):
+>
+> ```bash
+> sudo apt -y install libgtest-dev libgmock-dev
+> ```
 
-Optionally, if you want to run the tests, you need to install `Google Gtest` and `Gmock` packages.
-For more details, see [Google Test User Guide](https://google.github.io/googletest/):
-
-```bash
-sudo apt -y install libgtest-dev libgmock-dev
-```
+### Python libraries
 
 For the [Python API](https://docs.prophesee.ai/stable/api/python/index.html#chapter-api-python), you will need Python and some additional libraries.
 We support Python 3.9 and 3.10 on Ubuntu 22.04 and Python 3.11 and 3.12 on Ubuntu 24.04.
@@ -83,7 +86,7 @@ Next, create a virtual environment and install the necessary dependencies:
 ```bash
 python3 -m venv /tmp/prophesee/py3venv --system-site-packages
 /tmp/prophesee/py3venv/bin/python -m pip install pip --upgrade
-/tmp/prophesee/py3venv/bin/python -m pip install -r OPENEB_SRC_DIR/utils/python/python_requirements/requirements_openeb.txt
+/tmp/prophesee/py3venv/bin/python -m pip install -r <OPENEB_SRC_DIR>/utils/python/requirements_openeb.txt
 ```
 
 > [!NOTE]
@@ -113,13 +116,15 @@ cmake --build .
 sudo cmake --build . --target install
 ```
 
+### CUDA dependencies
+
 To use Machine Learning features, you need to install some additional dependencies.
 
 First, if you have some NVIDIA hardware with GPUs, you can optionally install [CUDA (11.6 or 11.7)](https://developer.nvidia.com/cuda-downloads)
 and [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html) to leverage them with pytorch and libtorch.
 
 Make sure that you install a version of CUDA that is compatible with your GPUs by checking
-[Nvidia compatibility page](https://docs.nvidia.com/deeplearning/cudnn/support-matrix/index.html).
+[NVIDIA compatibility page](https://docs.nvidia.com/deeplearning/cudnn/support-matrix/index.html).
 
 > [!NOTE]
 >
@@ -153,19 +158,32 @@ Make sure that you install a version of CUDA that is compatible with your GPUs b
     cmake --build . --config Release -- -j 4
     ```
   
-To use OpenEB directly from the `build` folder, you need to update some environment variables using this script (which you may add to your `~/.bashrc` to make it permanent):
+To use OpenEB directly from the `build` folder, you need to update some environment variables using this script:
 
 ```bash
 source utils/scripts/setup_env.sh
 ```
 
-[Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB, but you still need to copy the udev rules files in the system path and reload them so that your camera is detected with this command:
+> [!NOTE]
+>
+> You may add this to your `~/.bashrc` to make it permanent:
+> ```bash
+> nano ~/.bashrc
+> # Add this line to the very end:
+> source <OPENEB_SRC_DIR>/build/utils/scripts/setup_env.sh
+> ```
+
+### Camera plugins
+
+[Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB, but you still need to copy the udev rules files in the system path and reload them so that your camera is detected:
 
 ```bash
 sudo cp <OPENEB_SRC_DIR>/hal_psee_plugins/resources/rules/*.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
+## Final thoughts
 
 > [!NOTE]
 >

@@ -3,6 +3,7 @@
 ---
 
 # Compiling on MacOS
+
 ## Retrieving OpenEB source code
 
 Clone the [GitHub repository](https://github.com/prophesee-ai/openeb) in a path that doesn't contain any spaces:

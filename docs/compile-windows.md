@@ -4,9 +4,9 @@
 
 # Compiling on Windows
 
-Currently, we support only Windows 10. 
-Compilation on other versions of Windows was not tested.
-For those platforms some adjustments to this guide or to the code itself may be required.
+| | |
+-|-
+OS | tested only on Windows 10
 
 <details>
 <summary><h2>Upgrading OpenEB</h2></summary>
