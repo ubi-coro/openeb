@@ -58,8 +58,3 @@ event file or folder → `.hdf5` | `build/bin/metavision_file_to_hdf5`
 Description | Path
 -|-
 view and record a camera or file | `build/bin/metavision_viewer`
-
-### ROS 1 and ROS 2 driver installation
-
-- [ROS 1](docs/metavision_ros1_driver.md)
-- [ROS 2](docs/metavision_ros2_driver.md)
