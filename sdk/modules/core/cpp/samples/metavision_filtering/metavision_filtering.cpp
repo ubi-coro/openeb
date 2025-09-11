@@ -22,8 +22,8 @@
 #include <metavision/sdk/core/algorithms/roi_filter_algorithm.h>
 #include <metavision/sdk/stream/camera.h>
 #include <metavision/sdk/stream/camera_exception.h>
-#include "metavision/sdk/ui/utils/event_loop.h"
-#include "metavision/sdk/ui/utils/window.h"
+#include <metavision/sdk/ui/utils/event_loop.h>
+#include <metavision/sdk/ui/utils/window.h>
 
 namespace po = boost::program_options;
 
@@ -140,6 +140,8 @@ int main(int argc, char *argv[]) {
             case Metavision::UIKeyEvent::KEY_ESCAPE:
             case Metavision::UIKeyEvent::KEY_Q:
                 should_stop = true;
+                break;
+            default:
                 break;
             }
         }

@@ -22,7 +22,7 @@ Remove the folders where you installed Metavision artifacts (check both the `bui
 Clone the [GitHub repository](https://github.com/prophesee-ai/openeb):
 
 ```bash
-git clone https://github.com/prophesee-ai/openeb.git --branch 5.0.0
+git clone https://github.com/prophesee-ai/openeb.git --branch 5.1.1
 ```
 
 In the following sections, absolute path to this directory is called `OPENEB_SRC_DIR`.
@@ -50,7 +50,7 @@ Install the following tools:
     * For building only, you can install MS Build Tools (free, part of Windows 10 SDK package)
       * Download and run ["Build tools for Visual Studio 2022" installer](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
       * Select "C++ build tools", make sure Windows 10 SDK is checked, and add English Language Pack
-    * For development, you can also download and run [Visual Studio Installer](https://visualstudio.microsoft.com/downloads/)    
+    * For development, you can also download and run [Visual Studio Installer](https://visualstudio.microsoft.com/downloads/)
  * Install [vcpkg](https://github.com/microsoft/vcpkg) that will be used for installing dependencies:
     * download and extract [vcpkg version 2024.04.26](https://github.com/microsoft/vcpkg/archive/refs/tags/2024.04.26.zip) in a folder that we will refer as `VCPKG_SRC_DIR`
     * `cd <VCPKG_SRC_DIR>`
@@ -100,7 +100,7 @@ Create a virtual environment and install the necessary dependencies:
 ```bash
 python -m venv C:\tmp\prophesee\py3venv --system-site-packages
 C:\tmp\prophesee\py3venv\Scripts\python -m pip install pip --upgrade
-C:\tmp\prophesee\py3venv\Scripts\python -m pip install -r OPENEB_SRC_DIR\utils\python\python_requirements\requirements_openeb.txt
+C:\tmp\prophesee\py3venv\Scripts\python -m pip install -r OPENEB_SRC_DIR\utils\python\requirements_openeb.txt
 ```
 
 When creating the virtual environment, it is necessary to use the `--system-site-packages` option to ensure that
@@ -203,6 +203,13 @@ To use OpenEB directly from the `build` folder, you need to update the environme
 <summary>Option 2 - deploying OpenEB</summary>
 
 To deploy OpenEB, you need to build the `INSTALL` project. By default, files will be deployed in `C:\Program Files\Prophesee`.
+
+You also need to manually edit some environment variables:
+
+* append `<OPENEB_INSTALL_DIR>\bin` to `PATH` (`C:\Program Files\Prophesee\bin` if you used default configuration)
+* append `<OPENEB_INSTALL_DIR>\lib\metavision\hal\plugins` to `MV_HAL_PLUGIN_PATH` (`C:\Program Files\Prophesee\lib\metavision\hal\plugins` if you used default configuration)
+* append `<OPENEB_INSTALL_DIR>\lib\hdf5\plugin` to `HDF5_PLUGIN_PATH` (`C:\Program Files\Prophesee\lib\hdf5\plugin` if you used default configuration)
+* append `<PYTHON3_PACKAGES_INSTALL_DIR>` to `PYTHONPATH` (not needed if you used default configuration)
 </details>
 </details>
 

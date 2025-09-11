@@ -11,7 +11,6 @@ Compilation and execution were tested on platforms that meet the following requi
 OS | Ubuntu 22.04 or 24.04<br>64-bit
 Architecture | amd64 (x64)
 Graphics card | support of OpenGL 3.0 or higher
-CPU | [support of AVX2](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX2)
 
 > [!WARNING]
 >
@@ -40,7 +39,7 @@ Make a global check in your system paths (`/usr/lib`, `/usr/local/lib`, `/usr/in
 Clone the [GitHub repository](https://github.com/prophesee-ai/openeb):
 
 ```bash
-git clone https://github.com/prophesee-ai/openeb.git --branch 5.0.0
+git clone https://github.com/prophesee-ai/openeb.git --branch 5.1.1
 ```
 
 In the following sections, absolute path to this directory is called `OPENEB_SRC_DIR`.
@@ -157,31 +156,48 @@ Make sure that you install a version of CUDA that is compatible with your GPUs b
     ```bash
     cmake --build . --config Release -- -j 4
     ```
-  
-To use OpenEB directly from the `build` folder, you need to update some environment variables using this script:
 
-```bash
-source utils/scripts/setup_env.sh
-```
+Once the compilation is finished, you have two options: you can choose to work directly from the `build` folder or you can deploy the OpenEB files in the system path (`/usr/local/lib`, `/usr/local/include`...).
 
-> [!NOTE]
->
-> You may add this to your `~/.bashrc` to make it permanent:
-> ```bash
-> nano ~/.bashrc
-> # Add this line to the very end:
-> source <OPENEB_SRC_DIR>/build/utils/scripts/setup_env.sh
-> ```
+* Option 1 - working from `build` folder
 
-### Camera plugins
+  * To use OpenEB directly from the `build` folder, you need to update some environment variables using this script
+    (which you may add to your `~/.bashrc` to make it permanent):
 
-[Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB, but you still need to copy the udev rules files in the system path and reload them so that your camera is detected:
+    ```bash
+    source utils/scripts/setup_env.sh
+    ```
 
-```bash
-sudo cp <OPENEB_SRC_DIR>/hal_psee_plugins/resources/rules/*.rules /etc/udev/rules.d
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-```
+  * [Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB,
+    but you still need to copy the udev rules files in the system path and reload them so that your camera is detected with this command:
+
+    ```bash
+    sudo cp <OPENEB_SRC_DIR>/hal_psee_plugins/resources/rules/*.rules /etc/udev/rules.d
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+    ```
+
+* Option 2 - deploying in the system path
+
+  * To deploy OpenEB, launch the following command:
+
+    ```bash
+    sudo cmake --build . --target install
+    ```
+
+    Note that you can also deploy the OpenEB files (applications, samples, libraries etc.) in a directory of your choice by using
+    the `CMAKE_INSTALL_PREFIX` variable (`-DCMAKE_INSTALL_PREFIX=<OPENEB_INSTALL_DIR>`) when generating the makefiles
+    in step 2. Similarly, you can configure the directory where the Python packages will be deployed using the
+    `PYTHON3_SITE_PACKAGES` variable (`-DPYTHON3_SITE_PACKAGES=<PYTHON3_PACKAGES_INSTALL_DIR>`).
+
+  * you also need to update `LD_LIBRARY_PATH` and `HDF5_PLUGIN_PATH`
+    (which you may add to your `~/.bashrc` to make it permanent):
+
+    ```bash
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+    export HDF5_PLUGIN_PATH=$HDF5_PLUGIN_PATH:/usr/local/hdf5/lib/plugin  # On Ubuntu 22.04
+    export HDF5_PLUGIN_PATH=$HDF5_PLUGIN_PATH:/usr/local/lib/hdf5/plugin  # On Ubuntu 24.04
+    ```
 
 ## Final thoughts
 
@@ -190,3 +206,24 @@ sudo udevadm trigger
 > If you are using a third-party camera, you need to install the plugin provided by the camera vendor and specify the location of the plugin using the `MV_HAL_PLUGIN_PATH` environment variable.
 
 To get started with OpenEB, you can download some [sample recordings](https://docs.prophesee.ai/stable/datasets.html) and visualize them with [metavision_viewer](https://docs.prophesee.ai/stable/samples/modules/stream/viewer.html) or you can stream data from your Prophesee-compatible event-based camera.
+
+### Running the test suite (Optional)
+
+Running the test suite is a sure-fire way to ensure you did everything well with your compilation and installation process.
+
+ * Download [the files](https://kdrive.infomaniak.com/app/share/975517/2aa2545c-6b12-4478-992b-df2acfb81b38) necessary to run the tests.
+   Click `Download` on the top right folder. Beware of the size of the obtained archive which weighs around 1.5 Gb.
+
+ * Extract and put the content of this archive to `<OPENEB_SRC_DIR>/datasets`. 
+   For instance, the correct path of sequence `gen31_timer.raw` should be `<OPENEB_SRC_DIR>/datasets/openeb/gen31_timer.raw`.
+
+ * Regenerate the makefiles with the test options enabled:
+
+  ```bash
+  cd <OPENEB_SRC_DIR>/build
+  cmake .. -DBUILD_TESTING=ON
+  ```
+
+ * Compile again.  `cmake --build . --config Release -- -j 4`
+
+ * Finally, run the test suite:   `ctest --verbose`
