@@ -8,9 +8,36 @@
 
 Clone the [GitHub repository](https://github.com/prophesee-ai/openeb) in a path that doesn't contain any spaces:
 
+```bash
+git clone git@github.com:prophesee-ai/openeb.git
+```
+
+## Prerequisites
+
+Install the following dependencies:
+
+```bash
+brew update && brew upgrade
+brew install cmake libusb boost pybind11 opencv glfw
+```
+
+## Compilation
+
+Create and open the build directory in `OPENEB_SRC_DIR`
+
+```bash
+mkdir build && cd build
+```
+
+Generate the makefiles using CMake
+
+```bash
+cmake .. -DBUILD_TESTING=OFF
+```
+
 > [!NOTE]
 >
-> If you clone into a path that contains spaces, you will get an error when sourcing. This is because the environment variables cannot be set.
+> If you cloned into a path that contains spaces, you will get an error when sourcing. This is because the environment variables cannot be set.
 >
 >  Go into `path/to/openeb/build/utils/scripts/setup_env.sh`.
 >
@@ -33,33 +60,6 @@ Clone the [GitHub repository](https://github.com/prophesee-ai/openeb) in a path 
 > export HDF5_PLUGIN_PATH="/Users/jozseflurvig/GitHub Projects/openeb/build/lib/hdf5/plugin"
 > exec "$@"
 > ```
-
-```bash
-git clone git@github.com:prophesee-ai/openeb.git
-```
-
-## Prerequisites
-
-Install the following dependencies:
-
-```bash
-brew update
-brew install cmake libusb boost pybind11 opencv glfw
-```
-
-## Compilation
-
-Create and open the build directory in `OPENEB_SRC_DIR`
-
-```bash
-mkdir build && cd build
-```
-
-Generate the makefiles using CMake
-
-```bash
-cmake .. -DBUILD_TESTING=OFF
-```
 
 Compile
 

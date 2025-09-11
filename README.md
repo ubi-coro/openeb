@@ -1,6 +1,6 @@
 # OpenEB
 
-OpenEB is the open source project associated with [Metavision SDK](https://docs.prophesee.ai/stable/index.html)
+OpenEB is the open source project associated with [Metavision SDK](https://docs.prophesee.ai/stable/index.html).
 
 It enables anyone to get a better understanding of event-based vision, directly interact with events and build their own applications or camera plugins. As a camera manufacturer, ensure your customers benefit from the most advanced event-based software suite available by building your own plugin. As a creator, scientist, academic, join and contribute to the fast-growing event-based vision community.
 
