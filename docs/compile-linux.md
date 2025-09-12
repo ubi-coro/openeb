@@ -19,9 +19,7 @@ Graphics card | support of OpenGL 3.0 or higher
 <details>
 <summary><h2>Upgrading OpenEB</h2></summary>
 
-Read carefully the [Release Notes](https://docs.prophesee.ai/stable/release_notes.html)
-as some changes may impact your usage of our SDK (e.g. [API](https://docs.prophesee.ai/stable/api.html) updates)
-and cameras (e.g. [firmware update](https://support.prophesee.ai/portal/en/kb/articles/evk-firmware-versions) might be necessary).
+Read carefully the [Release Notes](https://docs.prophesee.ai/stable/release_notes.html) as some changes may impact your usage of our SDK (e.g. [API](https://docs.prophesee.ai/stable/api.html) updates) and cameras (e.g. [firmware update](https://support.prophesee.ai/portal/en/kb/articles/evk-firmware-versions) might be necessary).
 
 Clean your system from previously installed Prophesee software.
 
@@ -90,11 +88,10 @@ python3 -m venv /tmp/prophesee/py3venv --system-site-packages
 
 > [!NOTE]
 >
-> Note that when creating the virtual environment, it is necessary to use the `--system-site-packages` option to ensure that the SDK packages installed in the system directories are accessible. However, this option also makes your local user site-packages (typically found in `~/.local/lib/pythonX.Y/site-packages`) visible by default.
+> When creating the virtual environment, it is necessary to use the `--system-site-packages` option to ensure that the SDK packages installed in the system directories are accessible. However, this option also makes your local user site-packages (typically found in `~/.local/lib/pythonX.Y/site-packages`) visible by default.
 > To prevent this and maintain a cleaner virtual environment, you can set the environment variable `PYTHONNOUSERSITE` to true.
 
-Optionally, you can run the `activate` command (`source /tmp/prophesee/py3venv/bin/activate`) to modify your shell's environment variables,
-setting the virtual environment's Python interpreter and scripts as the default for your current session.
+Optionally, you can run the `activate` command (`source /tmp/prophesee/py3venv/bin/activate`) to modify your shell's environment variables, setting the virtual environment's Python interpreter and scripts as the default for your current session.
 This allows you to use simple commands like `python` without needing to specify the full path each time.
 
 The Python bindings of the C++ API rely on the [pybind11](https://github.com/pybind) library, specifically version 2.11.0.
@@ -119,11 +116,9 @@ sudo cmake --build . --target install
 
 To use Machine Learning features, you need to install some additional dependencies.
 
-First, if you have some NVIDIA hardware with GPUs, you can optionally install [CUDA (11.6 or 11.7)](https://developer.nvidia.com/cuda-downloads)
-and [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html) to leverage them with pytorch and libtorch.
+First, if you have some NVIDIA hardware with GPUs, you can optionally install [CUDA (11.6 or 11.7)](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html) to leverage them with pytorch and libtorch.
 
-Make sure that you install a version of CUDA that is compatible with your GPUs by checking
-[NVIDIA compatibility page](https://docs.nvidia.com/deeplearning/cudnn/support-matrix/index.html).
+Make sure that you install a version of CUDA that is compatible with your GPUs by checking [NVIDIA compatibility page](https://docs.nvidia.com/deeplearning/cudnn/support-matrix/index.html).
 
 > [!NOTE]
 >
@@ -161,15 +156,13 @@ Once the compilation is finished, you have two options: you can choose to work d
 
 * Option 1 - working from `build` folder
 
-  * To use OpenEB directly from the `build` folder, you need to update some environment variables using this script
-    (which you may add to your `~/.bashrc` to make it permanent):
+  * To use OpenEB directly from the `build` folder, you need to update some environment variables using this script (which you may add to your `~/.bashrc` to make it permanent):
 
     ```bash
     source utils/scripts/setup_env.sh
     ```
 
-  * [Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB,
-    but you still need to copy the udev rules files in the system path and reload them so that your camera is detected with this command:
+  * [Prophesee camera plugins](https://docs.prophesee.ai/stable/installation/camera_plugins.html) are included in OpenEB, but you still need to copy the udev rules files in the system path and reload them so that your camera is detected with this command:
 
     ```bash
     sudo cp <OPENEB_SRC_DIR>/hal_psee_plugins/resources/rules/*.rules /etc/udev/rules.d
@@ -185,13 +178,11 @@ Once the compilation is finished, you have two options: you can choose to work d
     sudo cmake --build . --target install
     ```
 
-    Note that you can also deploy the OpenEB files (applications, samples, libraries etc.) in a directory of your choice by using
-    the `CMAKE_INSTALL_PREFIX` variable (`-DCMAKE_INSTALL_PREFIX=<OPENEB_INSTALL_DIR>`) when generating the makefiles
-    in step 2. Similarly, you can configure the directory where the Python packages will be deployed using the
-    `PYTHON3_SITE_PACKAGES` variable (`-DPYTHON3_SITE_PACKAGES=<PYTHON3_PACKAGES_INSTALL_DIR>`).
+    > [!NOTE]
+    >
+    > You can also deploy the OpenEB files (applications, samples, libraries etc.) in a directory of your choice by using the `CMAKE_INSTALL_PREFIX` variable (`-DCMAKE_INSTALL_PREFIX=<OPENEB_INSTALL_DIR>`) when generating the makefiles in step 2. Similarly, you can configure the directory where the Python packages will be deployed using the `PYTHON3_SITE_PACKAGES` variable (`-DPYTHON3_SITE_PACKAGES=<PYTHON3_PACKAGES_INSTALL_DIR>`).
 
-  * you also need to update `LD_LIBRARY_PATH` and `HDF5_PLUGIN_PATH`
-    (which you may add to your `~/.bashrc` to make it permanent):
+  * you also need to update `LD_LIBRARY_PATH` and `HDF5_PLUGIN_PATH` (which you may add to your `~/.bashrc` to make it permanent):
 
     ```bash
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
