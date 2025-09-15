@@ -1,0 +1,16 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "openeb_python"
+version = "0.0.1"
+description="Python wrapper for OpenEB kernel using pybind11"
+authors = [
+    { name = "József Lurvig", email = "jozsef.lurvig@uni-bielefeld.de" },
+]
+requires-python = ">=3.9"
+
+[tool.scikit-build]
+wheel.expand-macos-universal-tags = true
+minimum-version = "build-system.requires"

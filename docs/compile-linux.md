@@ -56,6 +56,7 @@ sudo apt -y install apt-utils build-essential software-properties-common wget un
 sudo apt -y install libopencv-dev libboost-all-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler
 sudo apt -y install libhdf5-dev hdf5-tools libglew-dev libglfw3-dev libcanberra-gtk-module ffmpeg 
 ```
+
 > [!NOTE]
 >
 > Optionally, if you want to run the tests, you need to install `Google Gtest` and `Gmock` packages.
@@ -110,6 +111,13 @@ mkdir build && cd build
 cmake .. -DPYBIND11_TEST=OFF
 cmake --build .
 sudo cmake --build . --target install
+```
+
+maybe also works:
+
+```bash
+pip install pybind11
+brew install pybind11
 ```
 
 ### CUDA dependencies

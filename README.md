@@ -40,7 +40,6 @@ some [samples](https://docs.prophesee.ai/stable/samples.html) to discover how to
 
 - <a href="docs/compile-linux.md"><img src="docs/media/canonical_logo.png" height="17" /> <b>Linux</b></a>
 - <a href="docs/compile-windows"><img src="docs/media/windows_logo.png" height="17" /> <b>Windows</b></a>
-- <a href="docs/compile-mac.md"><img src="docs/media/apple_logo.png" height="17" /> <b>MacOS</b></a>
 
 ### See here a [project overview](docs/run.md)
 
