@@ -6,9 +6,9 @@ on:
 
 env:
   #General variables
-  python_versions: 3.9
+  python_versions: 3.10
   #Windows variables
-  python_executable: "C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe" #Cmake needs this to find python on windows
+  python_executable: "C:/hostedtoolcache/windows/Python/3.10.11/x64/python.exe" #Cmake needs this to find python on windows
 
 jobs:
 
@@ -161,7 +161,7 @@ jobs:
           cd ..
           unzip -q "vcpkg-export.zip"
           7z x ffmpeg-archive.7z
-          $python_executable -m pip install -r openeb/utils/python/requirements_openeb.txt
+          $python_executable -m pip install -r openeb/utils/python/requirements_openeb.txt -r openeb/utils/python/requirements_pytorch_cpu.txt
           cd openeb
 
       - name: Build openEB

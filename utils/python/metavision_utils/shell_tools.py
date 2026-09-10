@@ -98,7 +98,7 @@ def execute_cmd(cmd, **kwargs):
 
             sys.stdout.flush()
             sys.stderr.flush()
-            error_code, output, error = command_runner(cmd, cwd=working_directory, shell=shell, env=env, encoding="utf-8", method="poller", split_streams=True, stdout=_print_to_stdout, stderr=_print_to_stderr)
+            error_code, output, error = command_runner(cmd, cwd=working_directory, shell=shell, env=env, encoding="utf-8", method="poller", split_streams=True, valid_exit_codes=True, stdout=_print_to_stdout, stderr=_print_to_stderr)
             # When there is nothing on stderr, command_runner returns None
             if error is None:
                 error = ""

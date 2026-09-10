@@ -23,18 +23,17 @@ OpenEB also contains the source code of [Prophesee camera plugins](https://docs.
 
 Supported camera | Resolution
 -|-
-EVK2 | HD
 EVK3 | VGA/320/HD
 EVK4 | HD
 
 ## Content 
 
 This document describes how to compile and install the OpenEB codebase.
-For further information, refer to our [online documentation](https://docs.prophesee.ai/) where you will find
-some [tutorials](https://docs.prophesee.ai/stable/tutorials/index.html) to get you started in C++ or Python,
-some [samples](https://docs.prophesee.ai/stable/samples.html) to discover how to use
-[our API](https://docs.prophesee.ai/stable/api.html) and a more detailed
-[description of our modules and packaging](https://docs.prophesee.ai/stable/modules.html).
+For further information, refer to our [online documentation](https://docs.prophesee.ai/) where you will find:
+* [tutorials](https://docs.prophesee.ai/stable/tutorials/index.html) on getting started in C++ or Python,
+* [samples](https://docs.prophesee.ai/stable/samples.html) demonstrating how to use
+[our API](https://docs.prophesee.ai/stable/api.html),
+* [description of the modules and packaging](https://docs.prophesee.ai/stable/modules.html).
 
 ### Read how to compile the repo on:
 

@@ -10,6 +10,9 @@ ENV DEBIAN_FRONTEND "noninteractive"
 ENV TZ "Europe/Paris"
 
 COPY ./utils/python/requirements_openeb.txt ./openeb_environment/requirements_openeb.txt
+COPY ./utils/python/requirements_pytorch_cpu.txt ./openeb_environment/requirements_pytorch_cpu.txt
+COPY ./utils/python/requirements_pytorch_cpu.txt ./openeb_environment/requirements_pytorch_cuda.txt
+
 
 # Install dependencies
 RUN apt-get update && apt-get -y install \
@@ -43,7 +46,7 @@ RUN python3 -m venv /opt/prophesee/psee-py3venv --system-site-packages
 
 # Install pip dependencies
 RUN /opt/prophesee/psee-py3venv/bin/python3 -m pip install pip --upgrade \
-    && /opt/prophesee/psee-py3venv/bin/python3 -m pip install -r openeb_environment/requirements_openeb.txt \
+    && /opt/prophesee/psee-py3venv/bin/python3 -m pip install -r openeb_environment/requirements_openeb.txt -r openeb_environment/requirements_pytorch_cpu.txt \
     && rm -rf ~/.cache/pip/*
 
 # Pybind11

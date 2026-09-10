@@ -68,4 +68,4 @@ def pytestcase_training_mini_dataset(tmpdir, dataset_dir):
     # Verify checkpoint has been written
     ckpt_filenames = glob.glob(os.path.join(tmpdir, "checkpoints", "epoch=1*.ckpt"))
     assert len(ckpt_filenames) == 1
-    dic = torch.load(ckpt_filenames[0])
+    dic = torch.load(ckpt_filenames[0], weights_only=False)

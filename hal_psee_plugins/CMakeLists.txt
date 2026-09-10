@@ -45,10 +45,14 @@ endif(BUILD_INTERNAL_PLUGINS)
 add_subdirectory(resources)
 
 # Apps
-add_subdirectory(apps)
+if (BUILD_APPS)
+    add_subdirectory(apps)
+endif()
 
 # Samples
-add_subdirectory(samples)
+if (BUILD_SAMPLES)
+    add_subdirectory(samples)
+endif()
 
 # Python
 if(COMPILE_PYTHON3_BINDINGS)

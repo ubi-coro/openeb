@@ -51,6 +51,7 @@ public:
 
         // increment callbacks counter
         callback_counter++;
+    }
 };
 
 // main loop
@@ -74,8 +75,8 @@ int main(int argc, char *argv[]) {
     // to visualize the events, we will need to build frames and render them.
     // building frame will be done with a frame generator that will accumulate the events over time.
     // we need to provide it the camera resolution that we can retrieve from the camera instance
-    int camera_width  = cam.geometry().width();
-    int camera_height = cam.geometry().height();
+    int camera_width  = cam.geometry().get_width();
+    int camera_height = cam.geometry().get_height();
 
     // we also need to choose an accumulation time and a frame rate (here of 20ms and 50 fps)
     const std::uint32_t acc = 20000;

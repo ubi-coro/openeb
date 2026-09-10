@@ -46,9 +46,11 @@ set(DIRECT_COPY_FILES
   ${HAL_OPEN_PLUGIN_FILES}
   utils/python/metavision_utils
   utils/python/requirements_openeb.txt
+  utils/python/requirements_pytorch_cpu.txt
+  utils/python/requirements_pytorch_cuda.txt
   utils/cpp utils/scripts
   utils/windows/resources.rc.in
-  utils/windows/vcpkg-openeb.json
+  utils/windows/11/vcpkg-openeb.json
   utils/CMakeLists.txt
   sdk/cmake
   sdk/CMakeLists.txt
@@ -72,10 +74,6 @@ file(COPY "${PROJECT_SOURCE_DIR}/utils/github_actions/openeb/"
 )
 file(COPY "${PROJECT_SOURCE_DIR}/utils/github_actions/openeb/mergify.yml"
      DESTINATION "${OUTPUT_DIR}/.github"
-)
-
-file(COPY "${PROJECT_SOURCE_DIR}/utils/jenkins/windows/vcpkg.json"
-     DESTINATION "${OUTPUT_DIR}/utils/windows"
 )
 
 file(COPY "${PROJECT_SOURCE_DIR}/utils/jenkins/containers/Dockerfile.OpenEB"
