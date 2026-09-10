@@ -5,9 +5,10 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.import inspect
 
+import inspect
+
 import metavision_hal
 import pytest
-import inspect
 
 
 def get_class_member_names(class_type):
@@ -65,6 +66,4 @@ def pytestcase_should_disable_main_channel(i_trigger_in):
 
 
 def pytestcase_should_have_correct_channel_map(i_trigger_in):
-    assert i_trigger_in.get_available_channels() == {
-        metavision_hal.I_TriggerIn.Channel.MAIN: 0, metavision_hal.I_TriggerIn.Channel.AUX: 1, metavision_hal.
-        I_TriggerIn.Channel.LOOPBACK: 2}
+    assert i_trigger_in.get_available_channels() == {metavision_hal.I_TriggerIn.Channel.MAIN: 0, metavision_hal.I_TriggerIn.Channel.AUX: 1, metavision_hal.I_TriggerIn.Channel.LOOPBACK: 2}

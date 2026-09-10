@@ -6,20 +6,17 @@
 # See the License for the specific language governing permissions and limitations under the License.import inspect
 
 import os
-import pytest
-import inspect
 
 import metavision_hal
 
 
 def pytestcase_hal_psee_plugin_can_open_raw_string_path(dataset_dir):
-    device = metavision_hal.DeviceDiscovery.open_raw_file(os.path.join(dataset_dir,
-                                                                       "openeb", "gen4_evt3_hand.raw"))
+    device = metavision_hal.DeviceDiscovery.open_raw_file(os.path.join(dataset_dir, "openeb", "gen4_evt3_hand.raw"))
     assert device is not None
 
 
 def pytestcase_hal_psee_plugin_can_open_raw_pathlib(dataset_dir):
     import pathlib
-    device = metavision_hal.DeviceDiscovery.open_raw_file(pathlib.Path(dataset_dir,
-                                                                       "openeb", "gen4_evt3_hand.raw"))
+
+    device = metavision_hal.DeviceDiscovery.open_raw_file(pathlib.Path(dataset_dir, "openeb", "gen4_evt3_hand.raw"))
     assert device is not None

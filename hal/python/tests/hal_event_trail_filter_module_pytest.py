@@ -5,9 +5,10 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.import inspect
 
+import inspect
+
 import metavision_hal
 import pytest
-import inspect
 
 
 def get_class_member_names(class_type):
@@ -68,9 +69,7 @@ def pytestcase_event_trail_filter_module_should_disable(i_event_trail_filter_mod
 
 
 def pytestcase_event_trail_filter_module_should_have_correct_available_types(i_event_trail_filter_module):
-    assert i_event_trail_filter_module.get_available_types() == {
-        metavision_hal.I_EventTrailFilterModule.Type.TRAIL, metavision_hal.I_EventTrailFilterModule.Type.STC_CUT_TRAIL,
-        metavision_hal.I_EventTrailFilterModule.Type.STC_KEEP_TRAIL}
+    assert i_event_trail_filter_module.get_available_types() == {metavision_hal.I_EventTrailFilterModule.Type.TRAIL, metavision_hal.I_EventTrailFilterModule.Type.STC_CUT_TRAIL, metavision_hal.I_EventTrailFilterModule.Type.STC_KEEP_TRAIL}
 
 
 def pytestcase_event_trail_filter_module_should_have_correct_type_by_default(i_event_trail_filter_module):

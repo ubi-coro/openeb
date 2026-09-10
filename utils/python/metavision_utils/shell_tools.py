@@ -12,13 +12,13 @@
 """
 Module defining utility function to execute commands
 """
-from __future__ import print_function
-from subprocess import Popen, PIPE
-import shlex
-import sys
+
 import os
 import platform
-import shutil
+import shlex
+import sys
+from subprocess import Popen
+
 from command_runner import command_runner
 
 
@@ -51,46 +51,41 @@ def execute_cmd(cmd, **kwargs):
     Returns : a tuple containing output, error_output and error_code of the command executed
 
     """
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
-    working_directory = kwargs.pop('working_directory', None)
-    shell = kwargs.pop('shell', False)
-    env = kwargs.pop('env', None)
-    detached = kwargs.pop('detached', False)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
+    working_directory = kwargs.pop("working_directory", None)
+    shell = kwargs.pop("shell", False)
+    env = kwargs.pop("env", None)
+    detached = kwargs.pop("detached", False)
 
     output, error, error_code = "", "", 0
 
     if dry_run or verbose:
         if working_directory:
-            print("In directory '{}', execute '{}'".format(working_directory, cmd))
+            print(f"In directory '{working_directory}', execute '{cmd}'")
         else:
             print(cmd)
 
     if not dry_run:
         if working_directory:
             if not os.path.isdir(working_directory):
-                error = "Specified working directory '{}' does not exist".format(working_directory)
+                error = f"Specified working directory '{working_directory}' does not exist"
                 error_code = 1
                 return output, error, error_code
 
         if detached:
             use_cmd_as_string = shell
-            if platform.system() == 'Windows':
+            if platform.system() == "Windows":
                 use_cmd_as_string = True
 
-            process = Popen(cmd if use_cmd_as_string else shlex.split(cmd),
-                            cwd=working_directory,
-                            stderr=None,
-                            stdout=None,
-                            shell=shell,
-                            env=env,
-                            close_fds=True)
+            process = Popen(cmd if use_cmd_as_string else shlex.split(cmd), cwd=working_directory, stderr=None, stdout=None, shell=shell, env=env, close_fds=True)
             res = process.poll()
             if res is not None:
                 return "", "", res
             else:
                 return "", "", 0
         else:
+
             def _print_to_stdout(s):
                 if verbose:
                     sys.stdout.write(s)
@@ -103,15 +98,7 @@ def execute_cmd(cmd, **kwargs):
 
             sys.stdout.flush()
             sys.stderr.flush()
-            error_code, output, error = command_runner(cmd,
-                                                       cwd=working_directory,
-                                                       shell=shell,
-                                                       env=env,
-                                                       encoding="utf-8",
-                                                       method="poller",
-                                                       split_streams=True,
-                                                       stdout=_print_to_stdout,
-                                                       stderr=_print_to_stderr)
+            error_code, output, error = command_runner(cmd, cwd=working_directory, shell=shell, env=env, encoding="utf-8", method="poller", split_streams=True, stdout=_print_to_stdout, stderr=_print_to_stderr)
             # When there is nothing on stderr, command_runner returns None
             if error is None:
                 error = ""

@@ -13,28 +13,29 @@
 Module with utility classes and functions to handle os related commmands
 """
 
-import os
 import datetime
-import tempfile
-import shutil
-import platform
 import math
+import os
+import platform
+import shutil
+import tempfile
 
 
 def shorten_path(path, length=80):
     """Shortens path"""
-    path = path.rstrip('/')
+    path = path.rstrip("/")
     if len(path) <= length:
         return path
     if length < 7:
         return path[-length:]
 
     num = math.floor((length - 5) / 2)
-    return '{}/.../{}'.format(path[:num], path[-num:])
+    return f"{path[:num]}/.../{path[-num:]}"
 
 
 def which(program):
     """Tests if an executable program exists"""
+
     def is_exe(fpath):
         """Returns True if path is an executable"""
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
@@ -53,16 +54,15 @@ def which(program):
     return None
 
 
-def get_parent_directory(filepath, level=1):
+def get_parent_directory(filepath: str, level: int = 1) -> str:
     """Return parent directory of a file
 
     Args:
         filepath (str): path of the file
-        level (int): parent directory level. 1 means parent directory, 2 is the parent directory of the parent
-          directory, etc ... Defaults to 1
+        level (int): parent directory level. 1 means parent directory, 2 is the parent directory of the parent directory, etc ... Defaults to 1
 
     Returns:
-        str : full path to the directory asked
+        str: full path to the directory asked
     """
     fullpath = os.path.abspath(filepath)
     dirname = os.path.dirname(fullpath)
@@ -71,46 +71,45 @@ def get_parent_directory(filepath, level=1):
     return dirname
 
 
-def get_date():
+def get_date() -> str:
     """Returns date"""
-    return datetime.datetime.now().strftime("%Y-%m-%d")
+    return datetime.datetime.now().astimezone().date().strftime("%Y-%m-%d")
 
 
-def write_temp_and_get_filepath(content, **kwargs):
+def write_temp_and_get_filepath(content: str, **kwargs) -> str:
     """Write contents in temporary file and returns its path"""
-    tmpf = tempfile.NamedTemporaryFile(
-        'w', delete=False, **kwargs)
+    tmpf = tempfile.NamedTemporaryFile("w", delete=False, **kwargs)
     tmpf.write(content)
     return tmpf.name
 
 
-def is_python_script(filepath):
+def is_python_script(filepath: str) -> bool:
     """Returns True if a file is a python executable."""
     if os.path.isdir(filepath):
         return False
     if not os.access(filepath, os.X_OK):
         return False
     try:
-        with open(filepath, 'r') as tmpf:
+        with open(filepath, "r") as tmpf:
             return has_python_content(tmpf.read())
     except UnicodeDecodeError:
         return False
 
 
-def has_python_extension(filename):
-    """Returns true if filename is recognized as python file."""
-    return filename.endswith('.py')
+def has_python_extension(filename: str) -> bool:
+    """Returns True if filename is recognized as python file."""
+    return filename.endswith(".py")
 
 
-def has_python_content(content):
+def has_python_content(content: str) -> bool:
     """A function to check if some string contains python code."""
-    first_line = content.split('\n')[0].strip()
+    first_line = content.split("\n")[0].strip()
     return "#!" in first_line and "python" in first_line
 
 
-def has_cpp_extension(filename):
-    """Returns true if filename is recognized as C++ file."""
-    for ext in ['.c', '.cpp', '.cxx', '.cc', '.h', '.hpp']:
+def has_cpp_extension(filename: str) -> bool:
+    """Returns True if filename is recognized as C++ file."""
+    for ext in [".c", ".cpp", ".cxx", ".cc", ".h", ".hpp"]:
         if filename.endswith(ext):
             return True
     return False
@@ -128,7 +127,7 @@ def get_environment_with_added_paths(paths_to_add):
     return env
 
 
-def create_directory(directory_path, **kwargs):
+def create_directory(directory_path, **kwargs) -> bool:
     """Recursive directory creation function. If directory already exists, does nothing
 
     Args:
@@ -142,39 +141,37 @@ def create_directory(directory_path, **kwargs):
                     Defaults to False.
 
     Returns:
-        bool : True if directory was successfully created, False otherwise. Remark that in case
-            of a dry-run, it will return True.
-
+        bool: True if directory was successfully created, False otherwise. Remark that in case of a dry-run, it will return True.
     """
 
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
 
     if dry_run or verbose:
-        print("Create directory '{}'".format(directory_path))
+        print(f"Create directory '{directory_path}'")
         if dry_run:
             return True
 
     if os.path.isdir(directory_path):
         if verbose:
-            print("Nothing to do : directory '{}' already exists.".format(directory_path))
+            print(f"Nothing to do : directory '{directory_path}' already exists.")
         return True
 
     try:
         os.makedirs(directory_path)
     except BaseException as exc:
         if verbose:
-            print("Error occurred while creating directory '{}' :".format(directory_path))
+            print(f"Error occurred while creating directory '{directory_path}' :")
             print(exc)
         return False
 
     if verbose:
-        print("Directory '{}' created".format(directory_path))
+        print(f"Directory '{directory_path}' created")
 
     return True
 
 
-def copy_directory(dir_to_copy_path, destination_directory, **kwargs):
+def copy_directory(dir_to_copy_path, destination_directory, **kwargs) -> bool:
     """Copy directory
 
     Args:
@@ -190,17 +187,15 @@ def copy_directory(dir_to_copy_path, destination_directory, **kwargs):
                 ignore_patterns (list of str): list of patterns to ignore
 
     Returns:
-        bool : True if file was successfully copied, False otherwise. Remark that in case
-               of a dry-run, it will return True.
-
+        bool: True if file was successfully copied, False otherwise. Remark that in case of a dry-run, it will return True.
     """
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
-    rename = kwargs.pop('rename', None)
-    ignore_patterns = tuple(kwargs.pop('ignore_patterns', []))
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
+    rename = kwargs.pop("rename", None)
+    ignore_patterns = tuple(kwargs.pop("ignore_patterns", []))
 
     if (not os.path.isdir(dir_to_copy_path)) and (not dry_run):
-        print("ERROR : directory '{}' does not exist".format(dir_to_copy_path))
+        print(f"ERROR : directory '{dir_to_copy_path}' does not exist")
         return False
 
     destination = os.path.join(destination_directory, os.path.basename(dir_to_copy_path))
@@ -208,7 +203,7 @@ def copy_directory(dir_to_copy_path, destination_directory, **kwargs):
         destination = os.path.join(destination_directory, rename)
 
     if dry_run or verbose:
-        print("cp -R {} {}".format(dir_to_copy_path, destination))
+        print(f"cp -R {dir_to_copy_path} {destination}")
         if dry_run:
             return True
 
@@ -223,7 +218,7 @@ def copy_directory(dir_to_copy_path, destination_directory, **kwargs):
     return True
 
 
-def remove_directory(directory_path, **kwargs):
+def remove_directory(directory_path, **kwargs) -> bool:
     """Remove directory
 
     Args:
@@ -236,22 +231,19 @@ def remove_directory(directory_path, **kwargs):
                     Defaults to False.
 
     Returns:
-        bool : True if directory was successfully removed, False otherwise. Remark that in case
-               of a dry-run, it will return True.
-
-
+        bool: True if directory was successfully removed, False otherwise. Remark that in case of a dry-run, it will return True.
     """
 
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
 
     if not os.path.isdir(directory_path):
         if verbose:
-            print("Nothing to do : directory '{}' does not exist.".format(directory_path))
+            print(f"Nothing to do : directory '{directory_path}' does not exist.")
         return True
 
     if dry_run or verbose:
-        print("rm -r '{}'".format(directory_path))
+        print(f"rm -r '{directory_path}'")
         if dry_run:
             return True
 
@@ -259,14 +251,14 @@ def remove_directory(directory_path, **kwargs):
         shutil.rmtree(directory_path)
     except BaseException as exc:
         if verbose:
-            print("Error occurred while removing directory '{}' :".format(directory_path))
+            print(f"Error occurred while removing directory '{directory_path}' :")
             print(exc)
         return False
 
     return True
 
 
-def remove_file(filepath, **kwargs):
+def remove_file(filepath, **kwargs) -> bool:
     """Remove directory
 
     Args:
@@ -279,22 +271,19 @@ def remove_file(filepath, **kwargs):
                     Defaults to False.
 
     Returns:
-        bool : True if directory was successfully removed, False otherwise. Remark that in case
-               of a dry-run, it will return True.
-
-
+        bool: True if directory was successfully removed, False otherwise. Remark that in case of a dry-run, it will return True.
     """
 
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
 
     if not os.path.isfile(filepath):
         if verbose:
-            print("Nothing to do : file '{}' does not exist.".format(filepath))
+            print(f"Nothing to do : file '{filepath}' does not exist.")
         return True
 
     if dry_run or verbose:
-        print("rm '{}'".format(filepath))
+        print(f"rm '{filepath}'")
         if dry_run:
             return True
 
@@ -302,14 +291,14 @@ def remove_file(filepath, **kwargs):
         os.remove(filepath)
     except BaseException as exc:
         if verbose:
-            print("Error occurred while removing file '{}' :".format(filepath))
+            print(f"Error occurred while removing file '{filepath}' :")
             print(exc)
         return False
 
     return True
 
 
-def copy_file_in_directory(file_to_copy_path, directory, **kwargs):
+def copy_file_in_directory(file_to_copy_path, directory, **kwargs) -> bool:
     """Copy file in directory
 
     Args:
@@ -324,13 +313,11 @@ def copy_file_in_directory(file_to_copy_path, directory, **kwargs):
                 rename (str): If provided, rename file in destination directory
 
     Returns:
-        bool : True if file was successfully copied, False otherwise. Remark that in case
-               of a dry-run, it will return True.
-
+        bool: True if file was successfully copied, False otherwise. Remark that in case of a dry-run, it will return True.
     """
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
-    rename = kwargs.pop('rename', None)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
+    rename = kwargs.pop("rename", None)
 
     if not os.path.isdir(directory):
         if not create_directory(directory, dry_run=dry_run, verbose=verbose):
@@ -341,7 +328,7 @@ def copy_file_in_directory(file_to_copy_path, directory, **kwargs):
         destination = os.path.join(directory, rename)
 
     if dry_run or verbose:
-        print("cp {} {}".format(file_to_copy_path, destination))
+        print(f"cp {file_to_copy_path} {destination}")
         if dry_run:
             return True
     try:
@@ -355,7 +342,7 @@ def copy_file_in_directory(file_to_copy_path, directory, **kwargs):
     return True
 
 
-def move_file(file_to_move_path, directory_destination_path, **kwargs):
+def move_file(file_to_move_path, directory_destination_path, **kwargs) -> bool:
     """Move file in directory
 
     Args:
@@ -371,13 +358,11 @@ def move_file(file_to_move_path, directory_destination_path, **kwargs):
                 rename (str): If provided, rename file in destination directory
 
     Returns:
-        bool : True if file was successfully copied, False otherwise. Remark that in case
-               of a dry-run, it will return True.
-
+        bool: True if file was successfully copied, False otherwise. Remark that in case of a dry-run, it will return True.
     """
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
-    rename = kwargs.pop('rename', None)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
+    rename = kwargs.pop("rename", None)
 
     if not os.path.isdir(directory_destination_path):
         if not create_directory(directory_destination_path, dry_run=dry_run, verbose=verbose):
@@ -388,7 +373,7 @@ def move_file(file_to_move_path, directory_destination_path, **kwargs):
         destination = os.path.join(directory_destination_path, os.path.basename(file_to_move_path))
 
     if dry_run or verbose:
-        print("mv {} {}".format(file_to_move_path, destination))
+        print(f"mv {file_to_move_path} {destination}")
         if dry_run:
             return True
     try:
@@ -402,7 +387,7 @@ def move_file(file_to_move_path, directory_destination_path, **kwargs):
     return True
 
 
-def write_text_in_file(text, filepath, **kwargs):
+def write_text_in_file(text, filepath, **kwargs) -> bool:
     """Writes some text in a file
 
     Args:
@@ -418,12 +403,12 @@ def write_text_in_file(text, filepath, **kwargs):
                     Defaults to False.
 
     Returns:
-        bool : True if file the operation was successful, False otherwise.
+        bool: True if file the operation was successful, False otherwise.
     """
 
-    dry_run = kwargs.pop('dry_run', False)
-    verbose = kwargs.pop('verbose', False)
-    append = kwargs.pop('append', False)
+    dry_run = kwargs.pop("dry_run", False)
+    verbose = kwargs.pop("verbose", False)
+    append = kwargs.pop("append", False)
 
     if dry_run or verbose:
         print("Write in file '{}' (mode : {})".format(filepath, "append" if append else "write"))
@@ -435,17 +420,17 @@ def write_text_in_file(text, filepath, **kwargs):
         return False
 
     try:
-        mode = 'a' if append else 'w'
+        mode = "a" if append else "w"
         with open(filepath, mode) as file_opened:
             file_opened.write(text)
-    except IOError as exc:
+    except OSError as exc:
         if verbose:
             print("Error occurred :")
             print(exc)
         return False
 
     if verbose:
-        print("File '{}' written".format(filepath))
+        print(f"File '{filepath}' written")
 
     return True
 
@@ -453,12 +438,7 @@ def write_text_in_file(text, filepath, **kwargs):
 class TemporaryDirectoryHandler(object):
     """Utility class to handle the creation of a temporary directory"""
 
-    def __init__(
-            self,
-            create_dir_right_away=True,
-            verbose_in_dtor=False,
-            tmp_dir_root=None,
-            tmp_dir_root_in_container=None):
+    def __init__(self, create_dir_right_away=True, verbose_in_dtor=False, tmp_dir_root=None, tmp_dir_root_in_container=None):
         """Constructor
 
         Args:
@@ -473,7 +453,7 @@ class TemporaryDirectoryHandler(object):
         self.__temporary_directory = None
         self.__temporary_directory_created = False
         self.__verbose_in_dtor = verbose_in_dtor
-        self.__tmp_dir_root = tmp_dir_root or os.path.join(os.getcwd(), 'tmp')
+        self.__tmp_dir_root = tmp_dir_root or os.path.join(os.getcwd(), "tmp")
         self.__tmp_dir_root_in_container = tmp_dir_root_in_container
 
         if not tmp_dir_root_in_container:
@@ -518,24 +498,24 @@ class TemporaryDirectoryHandler(object):
 
         """
 
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
 
         if dry_run or verbose:
             print("Create temporary directory")  # FIX THIS
             if dry_run:
                 if not self.__temporary_directory_created:  # not to overwrite the value of self.__temporary_directory
-                    self.__temporary_directory = os.path.join(self.__tmp_dir_root, 'tmp_dir')
+                    self.__temporary_directory = os.path.join(self.__tmp_dir_root, "tmp_dir")
                 return True
 
         if self.__temporary_directory_created:
             if verbose:
-                print("Temporary directory '{}' already created.".format(self.__temporary_directory))
+                print(f"Temporary directory '{self.__temporary_directory}' already created.")
             return True
 
         try:
             create_directory(self.__tmp_dir_root)
-            self.__temporary_directory = tempfile.mkdtemp(prefix=os.path.join(self.__tmp_dir_root, 'tmp_dir_'))
+            self.__temporary_directory = tempfile.mkdtemp(prefix=os.path.join(self.__tmp_dir_root, "tmp_dir_"))
             self.__temporary_directory_created = True
         except BaseException as exc:
             if verbose:
@@ -544,7 +524,7 @@ class TemporaryDirectoryHandler(object):
             return False
 
         if verbose:
-            print("Temporary directory '{}' created".format(self.__temporary_directory))
+            print(f"Temporary directory '{self.__temporary_directory}' created")
 
         return True
 
@@ -564,8 +544,8 @@ class TemporaryDirectoryHandler(object):
                 Remark that in case of a dry-run, it will return True.
 
         """
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
 
         if dry_run or verbose:
             print("Remove temporary directory")
@@ -580,7 +560,6 @@ class TemporaryDirectoryHandler(object):
             return True
 
         if self.__temporary_directory:
-
             tmp_dir = self.__temporary_directory
 
             if remove_directory(self.__temporary_directory, dry_run=dry_run, verbose=verbose):
@@ -590,7 +569,7 @@ class TemporaryDirectoryHandler(object):
                 return False
 
             if verbose:
-                print("Temporary directory '{}' removed".format(tmp_dir))
+                print(f"Temporary directory '{tmp_dir}' removed")
             self.__temporary_directory = None
         return True
 
@@ -616,9 +595,9 @@ class TemporaryDirectoryHandler(object):
 
         """
 
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
-        append = kwargs.pop('append', False)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
+        append = kwargs.pop("append", False)
 
         if (not self.__temporary_directory_created) and (not dry_run):
             if not self.create_temporary_directory(dry_run=dry_run, verbose=verbose):
@@ -630,7 +609,7 @@ class TemporaryDirectoryHandler(object):
             return None
 
         if verbose:
-            print("File '{}' written".format(file_fullpath))
+            print(f"File '{file_fullpath}' written")
 
         return file_fullpath
 
@@ -654,24 +633,21 @@ class TemporaryDirectoryHandler(object):
 
         """
 
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
-        command_exec = kwargs.pop('command_executer', None)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
+        command_exec = kwargs.pop("command_executer", None)
 
         if (not self.__temporary_directory_created) and (not dry_run):
             if not self.create_temporary_directory(dry_run=dry_run, verbose=verbose):
                 return None
 
-        if (not command_exec) or platform.system() == 'Windows':
+        if (not command_exec) or platform.system() == "Windows":
             if not copy_file_in_directory(file_to_copy, self.__temporary_directory, dry_run=dry_run, verbose=verbose):
                 return None
         else:
             dest_dir = os.path.join(self.__tmp_dir_root_in_container, os.path.basename(self.__temporary_directory))
-            cmd = "bash -c " + '"cp {} {}"'.format(file_to_copy, dest_dir)
-            if not command_exec(
-                    cmd,
-                    verbose=verbose,
-                    dry_run=dry_run):
+            cmd = "bash -c " + f'"cp {file_to_copy} {dest_dir}"'
+            if not command_exec(cmd, verbose=verbose, dry_run=dry_run):
                 return None
 
         return os.path.join(self.__temporary_directory, os.path.basename(file_to_copy))
@@ -697,28 +673,24 @@ class TemporaryDirectoryHandler(object):
 
         """
 
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
-        command_exec = kwargs.pop('command_executer', None)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
+        command_exec = kwargs.pop("command_executer", None)
 
         if (not self.__temporary_directory_created) and (not dry_run):
             if not self.create_temporary_directory(dry_run=dry_run, verbose=verbose):
                 return None
 
-        if (not command_exec) or platform.system() == 'Windows':
+        if (not command_exec) or platform.system() == "Windows":
             if not copy_directory(source_directory, self.__temporary_directory, dry_run=dry_run, verbose=verbose):
                 return None
         else:
             dest_dir = os.path.join(self.__tmp_dir_root_in_container, os.path.basename(self.__temporary_directory))
-            cmd = "bash -c " + '"cp -r {} {}"'.format(source_directory, dest_dir)
-            if not command_exec(
-                    cmd,
-                    verbose=verbose,
-                    dry_run=dry_run):
+            cmd = "bash -c " + f'"cp -r {source_directory} {dest_dir}"'
+            if not command_exec(cmd, verbose=verbose, dry_run=dry_run):
                 return None
 
-        destination_directory = os.path.join(self.__temporary_directory,
-                                             os.path.basename(os.path.basename(source_directory)))
+        destination_directory = os.path.join(self.__temporary_directory, os.path.basename(os.path.basename(source_directory)))
         return destination_directory
 
     def create_directory_in_tmp_dir(self, directory_basename, **kwargs):
@@ -740,8 +712,8 @@ class TemporaryDirectoryHandler(object):
 
         """
 
-        dry_run = kwargs.pop('dry_run', False)
-        verbose = kwargs.pop('verbose', False)
+        dry_run = kwargs.pop("dry_run", False)
+        verbose = kwargs.pop("verbose", False)
 
         if (not self.__temporary_directory_created) and (not dry_run):
             if not self.create_temporary_directory(dry_run=dry_run, verbose=verbose):

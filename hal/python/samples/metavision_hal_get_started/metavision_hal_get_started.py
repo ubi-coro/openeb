@@ -11,29 +11,26 @@
 Sample code that shows how to use HAL Python API to stream from a live camera or a RAW event file
 """
 
-from metavision_hal import DeviceDiscovery
 import argparse
+
+from metavision_hal import DeviceDiscovery
 
 
 def parse_args():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description='Metavision HAL Get Started Sample.',
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        '-i', '--input-event-file', dest='event_file_path', default="",
-        help="Path to input event RAW file. If not specified, the camera live stream is used.")
+    parser = argparse.ArgumentParser(description="Metavision HAL Get Started Sample.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-i", "--input-event-file", dest="event_file_path", default="", help="Path to input event RAW file. If not specified, the camera live stream is used.")
     args = parser.parse_args()
     return args
 
 
 def print_cd_events(event_buffer):
     if event_buffer.size > 0:
-        print(f"New buffer of size {event_buffer.size} with timestamp range: ("
-              f"{event_buffer[0]['t']},{event_buffer[-1]['t']})")
+        print(f"New buffer of size {event_buffer.size} with timestamp range: ({event_buffer[0]['t']},{event_buffer[-1]['t']})")
 
 
 def main():
-    """ Main """
+    """Main"""
     args = parse_args()
     if args.event_file_path:
         device = DeviceDiscovery.open_raw_file(args.event_file_path)

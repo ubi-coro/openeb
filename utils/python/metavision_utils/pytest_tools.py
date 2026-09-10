@@ -13,17 +13,18 @@
 Module with utility functions used in the pytests
 """
 
-import os
 import inspect
-from metavision_utils.shell_tools import execute_cmd
+import os
+
 from metavision_utils.os_tools import TemporaryDirectoryHandler
+from metavision_utils.shell_tools import execute_cmd
 
 
 def run_cmd_setting_mv_log_file(cmd, **kwargs):
-    '''
+    """
     Runs command given in input and returns error code and output, where the output is the content of
     the MV_LOG_FILE file
-    '''
+    """
 
     # Create temporary directory for output log file
     tmp_dir = TemporaryDirectoryHandler()
@@ -35,7 +36,7 @@ def run_cmd_setting_mv_log_file(cmd, **kwargs):
 
     # Get output from file
     assert os.path.exists(output_log_file)
-    with open(output_log_file, 'r') as file:
+    with open(output_log_file, "r") as file:
         output = file.read()
     return output, error_code
 
@@ -48,7 +49,7 @@ def get_mv_info_stripped_output(res):
 
 
 def compare_lists(list_1, list_2):
-    """"Compares two lists
+    """ "Compares two lists
 
     Args:
         list_1, list_2 : lists to compare
@@ -78,7 +79,6 @@ def get_instance_methods(obj):
     for name, value in inspect.getmembers(obj):
         if type(value).__name__ == "instancemethod":
             public_methods.append(name)
-    type(value).__name__ == "instancemethod"
     return public_methods
 
 
@@ -87,6 +87,6 @@ def get_public_classes(obj):
     classes = inspect.getmembers(obj, predicate=inspect.isclass)
     public_classes = []
     for name, _ in classes:
-        if not name.startswith('_'):
+        if not name.startswith("_"):
             public_classes.append(name)
     return public_classes

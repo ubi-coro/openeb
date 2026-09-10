@@ -7,9 +7,10 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.import inspect
 
+import inspect
+
 import metavision_hal
 import pytest
-import inspect
 
 
 def get_class_member_names(class_type):
